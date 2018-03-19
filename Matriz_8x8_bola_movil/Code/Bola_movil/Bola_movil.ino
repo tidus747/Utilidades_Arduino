@@ -8,6 +8,11 @@
 ADXL345 adxl = ADXL345();
 LedControl lc=LedControl(12,11,10,1); 
 
+// Definimos las variables globales de nuestro programa
+
+int pos_x = 0;
+int pos_y = 0;
+
 void setup() 
 {
    Serial.begin(9600);             
@@ -21,6 +26,8 @@ void setup()
   lc.shutdown(0,false);
   lc.setIntensity(0,8);// La valores estan entre 1 y 15 
   lc.clearDisplay(0);
+
+  lc.setLed(0,pos_x,pos_y,true);
 }
  
 void loop() 
@@ -34,22 +41,31 @@ void loop()
    Serial.print(", ");
    Serial.println(z); 
 
-   for (int row=0; row<8; row++)
-  {
-    for (int col=0; col<8; col++)
-    {
-      lc.setLed(0,col,row,true); // 
-      delay(25);
+   if (( x > -20) && (pos_x < 7)){ // Recordemos que aunque la matriz tiene 8 posiciones, comenzamos a contar en 0
+    lc.setLed(0,pos_x,pos_y,false);
+    pos_x++;
+    lc.setLed(0,pos_x,pos_y,true);
     }
-  }
- 
-  for (int row=0; row<8; row++)
-  {
-    for (int col=0; col<8; col++)
-    {
-      lc.setLed(0,col,row,false); // 
-      delay(25);
+
+   if (( x < -20) && (pos_x > 0)){ // Recordemos que aunque la matriz tiene 8 posiciones, comenzamos a contar en 0
+    lc.setLed(0,pos_x,pos_y,false);
+    pos_x--;
+    lc.setLed(0,pos_x,pos_y,true);
     }
-  }
-  delay(1000);
+
+    if (( z < 34) && (pos_y < 7)){ // Recordemos que aunque la matriz tiene 8 posiciones, comenzamos a contar en 0
+    lc.setLed(0,pos_x,pos_y,false);
+    pos_y++;
+    lc.setLed(0,pos_x,pos_y,true);
+    }
+
+    if (( z > 34) && (pos_y > 0)){ // Recordemos que aunque la matriz tiene 8 posiciones, comenzamos a contar en 0
+    lc.setLed(0,pos_x,pos_y,false);
+    pos_y--;
+    lc.setLed(0,pos_x,pos_y,true);
+    }
+
+
+    
+   delay(50);
 }
