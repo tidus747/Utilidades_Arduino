@@ -68,7 +68,7 @@ class Arduino:
         return disconectionCheck
 
     def disponible(self):
-        return
+        return ser.in_waiting 
 
     def enviarDatos(self):
         return
