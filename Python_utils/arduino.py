@@ -18,13 +18,15 @@ Ivan Rodriguez - 2018
 '''
 # Módulos y utilidades importadas
 import serial
+import os
+import sys
 
 
 # Definición de la clase Arduino
 class Arduino:
 	"""Clase para gestionar la conexión de un arduino desde Python"""
 	def __init__(self):
-        self.serial = ''
+        self.serial = serial.Serial()
         self.port = ''
         self.baudrate = ''
 		self.err = ''
@@ -33,8 +35,18 @@ class Arduino:
     def conectar(self,port,baudrate):
         self.baudrate = baudrate
         self.port = port
-        self.serial = serial.Serial(port, baudrate)
-        return
+        self.serial.port = port
+        self.serial.baudrate = baudrate
+        self.serial.open()
+
+        if (self.serial.isOpen()):
+            conectionCheck = True
+            print("La conexión serial se ha realizado correctamente")
+        else:
+            conectionCheck = False
+            print("La conexión serial no ha sido posible")
+
+        return conectionCheck
 
     def desconectar(self):
         return
