@@ -33,7 +33,7 @@ class Arduino:
 		return
 
     def conectar(self,port,baudrate):
-        
+
         if (self.serial.isOpen()):
             conectionCheck = False
             print("La conexión serial ya se encontraba abierta, cierrela antes")
@@ -55,8 +55,17 @@ class Arduino:
 
     def desconectar(self):
         if (self.serial.isOpen()):
-
-        return
+            self.serial.close()
+            self.port = ''
+            self.baudrate = ''
+            print("La conexión serial se ha cerrado correctamente")
+            disconectionCheck = True
+        else:
+            self.port = ''
+            self.baudrate = ''
+            print("No hay una conexión serial que cerrar")
+            disconectionCheck = True
+        return disconectionCheck
 
     def disponible(self):
         return
