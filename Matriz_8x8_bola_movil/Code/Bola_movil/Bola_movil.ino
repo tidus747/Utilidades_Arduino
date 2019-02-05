@@ -64,8 +64,6 @@ void loop()
     pos_y--;
     lc.setLed(0,pos_x,pos_y,true);
     }
-
-
     
    delay(50);
 }
